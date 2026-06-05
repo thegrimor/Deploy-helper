@@ -39,6 +39,21 @@
   margin-bottom: var(--space-md);
 }
 
+.scenarioImageWrapper {
+  margin: var(--space-md) 0;
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-bg-panel-raised);
+}
+
+.scenarioImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 .meta {
   display: flex;
   flex-direction: column;

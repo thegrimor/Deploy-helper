@@ -1,0 +1,81 @@
+:root {
+  /* Background layers */
+  --color-bg-page: #0d0d0f;
+  --color-bg-panel: #141418;
+  --color-bg-panel-raised: #1c1c22;
+
+  /* Battlefield surface */
+  --color-battlefield-bg: #1a1a10;
+  --color-battlefield-border: #4a3a1a;
+  --color-battlefield-grid: rgba(255, 200, 80, 0.06);
+
+  /* Deployment zone colors */
+  --color-zone-attacker: rgba(180, 40, 30, 0.35);
+  --color-zone-defender: rgba(30, 80, 180, 0.35);
+  --color-zone-neutral: rgba(120, 100, 30, 0.20);
+  --color-zone-stroke: rgba(255, 200, 80, 0.6);
+
+  /* Solid zone colors for legend */
+  --color-zone-attacker-solid: #b42820;
+  --color-zone-defender-solid: #1e50b4;
+
+  /* Text */
+  --color-text-primary: #e8dfc0;
+  --color-text-secondary: #9a8e70;
+  --color-text-accent: #d4aa00;
+  --color-text-danger: #c04030;
+
+  /* UI chrome */
+  --color-border: #3a3220;
+  --color-border-accent: #6a5520;
+  --color-button-bg: #1e1c14;
+  --color-button-hover: #2e2a18;
+  --color-button-active-bg: #3a2e10;
+  --color-button-active-border: #c8a800;
+
+  /* Typography */
+  --font-heading: 'Cinzel', 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-label: 'Cinzel', serif;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  /* Border radius */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  /* Shadows */
+  --shadow-panel: 0 2px 12px rgba(0, 0, 0, 0.6);
+  --glow-accent: 0 0 8px rgba(200, 168, 0, 0.4);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  background-color: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg-page); }
+::-webkit-scrollbar-thumb { background: var(--color-border-accent); border-radius: 3px; }
+
+:focus-visible {
+  outline: 2px solid var(--color-text-accent);
+  outline-offset: 2px;
+}

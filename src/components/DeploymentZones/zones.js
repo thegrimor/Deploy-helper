@@ -166,6 +166,30 @@ export const MISSIONS = [
     ],
   },
   {
+    id: 'take-and-hold',
+    name: 'Take and Hold',
+    shortName: 'T&H',
+    description:
+      'Deployment zones run along the short table edges. Each player occupies a 12" strip, ' +
+      'leaving a 36" central no-man\'s-land. Forces must advance across open ground to reach objectives.',
+    zones: [
+      {
+        role: 'attacker',
+        label: 'Attacker',
+        shape: 'rect',
+        // 12" from left short edge → x: 12/60*100 = 20%
+        x: 0, y: 0, width: 20, height: 100,
+      },
+      {
+        role: 'defender',
+        label: 'Defender',
+        shape: 'rect',
+        // 12" from right short edge → x: 80% to 100%
+        x: 80, y: 0, width: 20, height: 100,
+      },
+    ],
+  },
+  {
     id: 'crucible-of-battle',
     name: 'Crucible of Battle',
     shortName: 'CoB',

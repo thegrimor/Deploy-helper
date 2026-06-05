@@ -1,10 +1,18 @@
 import styles from './InfoPanel.module.css'
 
-export default function InfoPanel({ mission }) {
+export default function InfoPanel({ mission, primaria }) {
   return (
     <aside className={styles.panel} aria-live="polite" aria-atomic="true">
       <h3 className={styles.missionName}>{mission.name}</h3>
       <p className={styles.description}>{mission.description}</p>
+
+      {primaria && (
+        <>
+          <h4 className={styles.primariaName}>{primaria.name}</h4>
+          <p className={styles.description}>{primaria.description}</p>
+        </>
+      )}
+
       <dl className={styles.meta}>
         <div className={styles.metaRow}>
           <dt>Zones</dt>

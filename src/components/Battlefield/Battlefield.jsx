@@ -40,14 +40,14 @@ function polygonCentroid(points) {
 }
 
 function ZoneShape({ zone }) {
-  const fill = ZONE_FILL[zone.role] ?? ZONE_FILL.neutral
   const isNeutral = zone.role === 'neutral'
+  const fill = isNeutral ? 'none' : (ZONE_FILL[zone.role] ?? ZONE_FILL.neutral)
   const common = {
     fill,
     stroke: isNeutral ? 'var(--color-text-secondary)' : 'var(--color-zone-stroke)',
-    strokeWidth: isNeutral ? 0.3 : 0.6,
+    strokeWidth: isNeutral ? 0.5 : 0.6,
     strokeDasharray: isNeutral ? '1 0.5' : 'none',
-    opacity: isNeutral ? 0.7 : 1,
+    opacity: isNeutral ? 0.9 : 1,
   }
 
   if (zone.shape === 'rect') {

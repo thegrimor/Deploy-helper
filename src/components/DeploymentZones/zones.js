@@ -169,25 +169,26 @@ export const MISSIONS = [
     name: 'Crucible of Battle',
     shortName: 'CoB',
     description:
-      'Triangular deployment: each zone covers the full short edge and tapers diagonally ' +
-      'to the centre of the opposite short edge. The largest gap of all deployments.',
+      'Triangular deployment: diagonally opposite corners. Each zone covers the full short edge ' +
+      'and tapers to the centre of the adjacent long edge. The largest gap of all deployments.',
     zones: [
       {
-        // Attacker: left short edge — triangle pointing to centre of right edge
-        // (0,0) → full left edge → (0,100%) → tapers to centre-right → (100%,50%)
+        // Attacker: bottom-left triangle
+        // Full left short edge → centre of bottom long edge (50%,100%)
         role: 'attacker',
         label: 'Attacker',
         shape: 'polygon',
-        points: [[0, 0], [0, 100], [100, 50]],
-        labelPos: { x: 18, y: 50 },
+        points: [[0, 0], [0, 100], [50, 100]],
+        labelPos: { x: 17, y: 67 },
       },
       {
-        // Defender: right short edge — triangle pointing to centre of left edge
+        // Defender: top-right triangle
+        // Full right short edge → centre of top long edge (50%,0%)
         role: 'defender',
         label: 'Defender',
         shape: 'polygon',
-        points: [[100, 0], [0, 50], [100, 100]],
-        labelPos: { x: 82, y: 50 },
+        points: [[100, 0], [100, 100], [50, 0]],
+        labelPos: { x: 83, y: 33 },
       },
     ],
   },

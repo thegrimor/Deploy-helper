@@ -130,29 +130,40 @@ export const MISSIONS = [
     name: 'Tipping Point',
     shortName: 'TP',
     description:
-      'A Hammer & Anvil variant with stepped zones: 18" deep at the table\'s long edges ' +
-      'and 20" deep in the central strip. The closest points are only 20" apart, ' +
-      'creating an aggressive mid-table confrontation.',
+      'A Hammer & Anvil variant with stepped zones. Each zone is 14" deep at the table\'s ' +
+      'long edges and bulges to 20" deep in the central strip (between 8" from each long edge). ' +
+      'The closest points are only 20" apart, rewarding aggressive mid-table play.',
     zones: [
       {
-        // Attacker: left short edge, bulges toward centre in middle band
+        // Attacker: left short edge
+        // Outer portions (y: 0-18.18% and y: 81.82-100%, i.e. within 8" of long edges): 14" deep
+        // Inner portion (y: 18.18-81.82%): 20" deep
+        // 14" from short edge → x: 14/60*100 = 23.33%
+        // 20" from short edge → x: 20/60*100 = 33.33%
+        // 8" from long edge → y: 8/44*100 = 18.18%
         role: 'attacker',
         label: 'Attacker',
         shape: 'polygon',
         points: [
-          [0, 0], [30, 0], [30, 25], [33.33, 25], [33.33, 75], [30, 75], [30, 100], [0, 100],
+          [0, 0], [23.33, 0],
+          [23.33, 18.18], [33.33, 18.18],
+          [33.33, 81.82],
+          [23.33, 81.82], [23.33, 100], [0, 100],
         ],
-        labelPos: { x: 15, y: 50 },
+        labelPos: { x: 12, y: 50 },
       },
       {
-        // Defender: right short edge
+        // Defender: right short edge (mirror)
         role: 'defender',
         label: 'Defender',
         shape: 'polygon',
         points: [
-          [70, 0], [100, 0], [100, 100], [70, 100], [70, 75], [66.67, 75], [66.67, 25], [70, 25],
+          [76.67, 0], [100, 0], [100, 100], [76.67, 100],
+          [76.67, 81.82], [66.67, 81.82],
+          [66.67, 18.18],
+          [76.67, 18.18],
         ],
-        labelPos: { x: 85, y: 50 },
+        labelPos: { x: 88, y: 50 },
       },
     ],
   },

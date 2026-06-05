@@ -45,9 +45,9 @@ function ZoneShape({ zone }) {
   const common = {
     fill,
     stroke: isNeutral ? 'var(--color-text-secondary)' : 'var(--color-zone-stroke)',
-    strokeWidth: isNeutral ? 0.3 : 0.4,
-    strokeDasharray: isNeutral ? '1 0.5' : '2 1',
-    opacity: isNeutral ? 0.6 : 1,
+    strokeWidth: isNeutral ? 0.3 : 0.6,
+    strokeDasharray: isNeutral ? '1 0.5' : 'none',
+    opacity: isNeutral ? 0.7 : 1,
   }
 
   if (zone.shape === 'rect') {

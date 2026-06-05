@@ -193,29 +193,4 @@ export const MISSIONS = [
       },
     ],
   },
-  {
-    id: 'take-and-hold',
-    name: 'Take and Hold',
-    shortName: 'TaH',
-    description:
-      'Each player deploys in a 12" strip along one of the short table edges, ' +
-      'leaving a 36" no-man\'s-land across the centre. ' +
-      'The widest gap of any short-edge deployment.',
-    zones: [
-      {
-        // Attacker: left short edge, 12" deep → x: 12/60*100 = 20%
-        role: 'attacker',
-        label: 'Attacker',
-        shape: 'rect',
-        x: 0, y: 0, width: 20, height: 100,
-      },
-      {
-        // Defender: right short edge, 12" deep → starts at 80%
-        role: 'defender',
-        label: 'Defender',
-        shape: 'rect',
-        x: 80, y: 0, width: 20, height: 100,
-      },
-    ],
-  },
 ]

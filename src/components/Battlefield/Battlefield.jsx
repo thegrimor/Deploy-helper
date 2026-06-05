@@ -159,6 +159,49 @@ function RulerMarks() {
   return <>{marks}</>
 }
 
+function RulerLabels() {
+  const labels = []
+  const stepX = 12
+  const hStep = VB_H / 7.33
+  const textStyle = { userSelect: 'none', pointerEvents: 'none' }
+  const commonProps = {
+    fontSize: 2.2,
+    fontFamily: 'var(--font-body)',
+    fill: 'var(--color-text-secondary)',
+    opacity: 0.7,
+    style: textStyle,
+  }
+
+  // Top and bottom edges: 6" increments along the 60" axis
+  for (let x = stepX; x < VB_W; x += stepX) {
+    const inches = Math.round((x / VB_W) * 60)
+    labels.push(
+      <text key={`lx-t${x}`} x={x} y={2.8} textAnchor="middle" {...commonProps}>
+        {inches}&quot;
+      </text>,
+      <text key={`lx-b${x}`} x={x} y={VB_H - 1.2} textAnchor="middle" {...commonProps}>
+        {inches}&quot;
+      </text>
+    )
+  }
+
+  // Left and right edges: ~6" increments along the 44" axis
+  for (let y = hStep; y < VB_H; y += hStep) {
+    const inches = Math.round((y / VB_H) * 44)
+    labels.push(
+      <text key={`ly-l${y.toFixed(1)}`} x={1.8} y={y}
+        textAnchor="start" dominantBaseline="middle" {...commonProps}>
+        {inches}&quot;
+      </text>,
+      <text key={`ly-r${y.toFixed(1)}`} x={VB_W - 1.8} y={y}
+        textAnchor="end" dominantBaseline="middle" {...commonProps}>
+        {inches}&quot;
+      </text>
+    )
+  }
+  return <>{labels}</>
+}
+
 function Crosshair() {
   return (
     <>
@@ -206,8 +249,9 @@ export default function Battlefield({ mission }) {
             <ZoneLabel key={`lbl-${i}`} zone={zone} />
           ))}
 
-          {/* Ruler ticks */}
+          {/* Ruler ticks + labels */}
           <RulerMarks />
+          <RulerLabels />
 
           {/* Outer border */}
           <rect x={0} y={0} width={VB_W} height={VB_H}

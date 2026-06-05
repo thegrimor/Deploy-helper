@@ -63,32 +63,31 @@ export const MISSIONS = [
     name: 'Search & Destroy',
     shortName: 'S&D',
     description:
-      'Diagonal deployment across opposite table corners, with a 9" exclusion circle ' +
-      'around the centre point. The closest corners of the two zones are only ~12.7" apart, ' +
-      'enabling aggressive early engagement.',
+      'Each player deploys in one of two diagonally opposite quadrants (quarter-table rectangles), ' +
+      'with a 9" no-deploy exclusion circle around the centre of the battlefield.',
     zones: [
       {
+        // Attacker: top-right quadrant
         role: 'attacker',
         label: 'Attacker',
-        shape: 'polygon',
-        // Top-left triangle
-        points: [[0, 0], [100, 0], [0, 100]],
-        labelPos: { x: 20, y: 30 },
+        shape: 'rect',
+        x: 50, y: 0, width: 50, height: 50,
+        labelPos: { x: 75, y: 18 },
       },
       {
+        // Defender: bottom-left quadrant (diagonally opposite)
         role: 'defender',
         label: 'Defender',
-        shape: 'polygon',
-        // Bottom-right triangle
-        points: [[100, 0], [100, 100], [0, 100]],
-        labelPos: { x: 80, y: 70 },
+        shape: 'rect',
+        x: 0, y: 50, width: 50, height: 50,
+        labelPos: { x: 25, y: 82 },
       },
       {
-        // 9" exclusion circle from centre — shown as neutral overlay
+        // 9" exclusion circle — neither player can deploy within 9" of centre
+        // rx = 9/60*100 = 15%  ry = 9/44*100 = 20.45%
         role: 'neutral',
         label: '9"',
         shape: 'ellipse',
-        // Centre at 50%,50% with radii: 9/60*100=15% on x, 9/44*100=20.45% on y
         cx: 50, cy: 50, rx: 15, ry: 20.45,
         labelPos: { x: 50, y: 50 },
       },
@@ -130,40 +129,38 @@ export const MISSIONS = [
     name: 'Tipping Point',
     shortName: 'TP',
     description:
-      'A Hammer & Anvil variant with stepped zones. Each zone is 14" deep at the table\'s ' +
-      'long edges and bulges to 20" deep in the central strip (between 8" from each long edge). ' +
-      'The closest points are only 20" apart, rewarding aggressive mid-table play.',
+      'Hammer & Anvil variant with two different zone depths. ' +
+      'Each player\'s zone is 12" deep on one table half and 20" deep on the other, ' +
+      'with the deep halves on opposite sides. Minimum gap: 20".',
     zones: [
       {
         // Attacker: left short edge
-        // Outer portions (y: 0-18.18% and y: 81.82-100%, i.e. within 8" of long edges): 14" deep
-        // Inner portion (y: 18.18-81.82%): 20" deep
-        // 14" from short edge → x: 14/60*100 = 23.33%
-        // 20" from short edge → x: 20/60*100 = 33.33%
-        // 8" from long edge → y: 8/44*100 = 18.18%
+        // Top half (y 0-50%): 12" deep → x: 12/60*100 = 20%
+        // Bottom half (y 50-100%): 20" deep → x: 20/60*100 = 33.33%
+        // Step at y=50% (22" = midpoint of 44" table)
         role: 'attacker',
         label: 'Attacker',
         shape: 'polygon',
         points: [
-          [0, 0], [23.33, 0],
-          [23.33, 18.18], [33.33, 18.18],
-          [33.33, 81.82],
-          [23.33, 81.82], [23.33, 100], [0, 100],
+          [0, 0], [20, 0],
+          [20, 50], [33.33, 50],
+          [33.33, 100], [0, 100],
         ],
-        labelPos: { x: 12, y: 50 },
+        labelPos: { x: 10, y: 75 },
       },
       {
-        // Defender: right short edge (mirror)
+        // Defender: right short edge — deep half on TOP (mirrored)
+        // Top half (y 0-50%): 20" deep → x: 66.67% to 100%
+        // Bottom half (y 50-100%): 12" deep → x: 80% to 100%
         role: 'defender',
         label: 'Defender',
         shape: 'polygon',
         points: [
-          [76.67, 0], [100, 0], [100, 100], [76.67, 100],
-          [76.67, 81.82], [66.67, 81.82],
-          [66.67, 18.18],
-          [76.67, 18.18],
+          [66.67, 0], [100, 0],
+          [100, 100], [80, 100],
+          [80, 50], [66.67, 50],
         ],
-        labelPos: { x: 88, y: 50 },
+        labelPos: { x: 90, y: 25 },
       },
     ],
   },
@@ -172,21 +169,25 @@ export const MISSIONS = [
     name: 'Crucible of Battle',
     shortName: 'CoB',
     description:
-      'Short-edge deployment with the widest gap of all missions: 27.8" between zones. ' +
-      'Each player occupies a 16" strip, maximising the distance armies must travel ' +
-      'to engage and rewarding strong mid-board control.',
+      'Triangular deployment: each zone covers the full short edge and tapers diagonally ' +
+      'to the centre of the opposite short edge. The largest gap of all deployments.',
     zones: [
       {
+        // Attacker: left short edge — triangle pointing to centre of right edge
+        // (0,0) → full left edge → (0,100%) → tapers to centre-right → (100%,50%)
         role: 'attacker',
         label: 'Attacker',
-        shape: 'rect',
-        x: 0, y: 0, width: 26.83, height: 100,
+        shape: 'polygon',
+        points: [[0, 0], [0, 100], [100, 50]],
+        labelPos: { x: 18, y: 50 },
       },
       {
+        // Defender: right short edge — triangle pointing to centre of left edge
         role: 'defender',
         label: 'Defender',
-        shape: 'rect',
-        x: 73.17, y: 0, width: 26.83, height: 100,
+        shape: 'polygon',
+        points: [[100, 0], [0, 50], [100, 100]],
+        labelPos: { x: 82, y: 50 },
       },
     ],
   },

@@ -13,6 +13,16 @@ export default function InfoPanel({ mission, primaria }) {
         </>
       )}
 
+      {mission.image && (
+        <div className={styles.scenarioImageWrapper}>
+          <img
+            src={mission.image}
+            alt={`${mission.name} scenario map`}
+            className={styles.scenarioImage}
+          />
+        </div>
+      )}
+
       <dl className={styles.meta}>
         <div className={styles.metaRow}>
           <dt>Zones</dt>

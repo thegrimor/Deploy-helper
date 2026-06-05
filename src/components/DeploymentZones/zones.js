@@ -18,6 +18,7 @@ export const MISSIONS = [
     id: 'dawn-of-war',
     name: 'Dawn of War',
     shortName: 'DoW',
+    image: null,
     description:
       'Each player deploys in a 12" strip along one of the long table edges, ' +
       'leaving a 20" no-man\'s-land across the centre. ' +
@@ -41,6 +42,7 @@ export const MISSIONS = [
     id: 'hammer-and-anvil',
     name: 'Hammer & Anvil',
     shortName: 'H&A',
+    image: null,
     description:
       'Deployment zones run along the short table edges. Each player occupies an 18" strip, ' +
       'leaving a 24" central no-man\'s-land. A longer fight with more room to manoeuvre.',
@@ -63,6 +65,7 @@ export const MISSIONS = [
     id: 'search-and-destroy',
     name: 'Search & Destroy',
     shortName: 'S&D',
+    image: null,
     description:
       'Each player deploys in one of two diagonally opposite quadrants (quarter-table rectangles), ' +
       'with a 9" no-deploy exclusion circle around the centre of the battlefield.',
@@ -98,6 +101,7 @@ export const MISSIONS = [
     id: 'sweeping-engagement',
     name: 'Sweeping Engagement',
     shortName: 'SE',
+    image: null,
     description:
       'Stepped L-shaped zones from opposite long-edge corners. ' +
       'Each zone extends 8" from the long edge on the far half, and 14" on the near half. ' +
@@ -129,6 +133,7 @@ export const MISSIONS = [
     id: 'tipping-point',
     name: 'Tipping Point',
     shortName: 'TP',
+    image: null,
     description:
       'Hammer & Anvil variant with two different zone depths. ' +
       'Each player\'s zone is 12" deep on one table half and 20" deep on the other, ' +
@@ -169,6 +174,7 @@ export const MISSIONS = [
     id: 'take-and-hold',
     name: 'Take and Hold',
     shortName: 'T&H',
+    image: '/scenarios/take-and-hold.jpg',
     description:
       'Deployment zones run along the short table edges. Each player occupies a 12" strip, ' +
       'leaving a 36" central no-man\'s-land. Forces must advance across open ground to reach objectives.',
@@ -193,6 +199,7 @@ export const MISSIONS = [
     id: 'crucible-of-battle',
     name: 'Crucible of Battle',
     shortName: 'CoB',
+    image: null,
     description:
       'Triangular deployment: diagonally opposite corners. Each zone covers the full short edge ' +
       'and tapers to the centre of the adjacent long edge. The largest gap of all deployments.',

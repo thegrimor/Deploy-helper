@@ -114,6 +114,33 @@ function ZoneLabel({ zone }) {
   )
 }
 
+function ObjectiveMarker({ objective }) {
+  const cx = toX(objective.x)
+  const cy = toY(objective.y)
+  return (
+    <g role="img" aria-label={`Objective ${objective.label}`}>
+      <circle cx={cx} cy={cy} r={2.8} fill="none"
+        stroke="var(--color-objective-ring)" strokeWidth={0.35} opacity={0.55} />
+      <circle cx={cx} cy={cy} r={2.0} fill="none"
+        stroke="var(--color-objective-ring)" strokeWidth={0.45} opacity={0.9} />
+      <circle cx={cx} cy={cy} r={1.35}
+        fill="var(--color-objective-fill)" />
+      <text
+        x={cx} y={cy}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontSize={1.9}
+        fontFamily="var(--font-label, 'Cinzel', serif)"
+        fontWeight="700"
+        fill="var(--color-objective-label)"
+        style={{ userSelect: 'none', pointerEvents: 'none' }}
+      >
+        {objective.label}
+      </text>
+    </g>
+  )
+}
+
 function GridLines() {
   const lines = []
   // Vertical lines every 6" (= 12 SVG units on 120-unit wide board)
@@ -204,6 +231,11 @@ export default function Battlefield({ mission }) {
           {/* Zone labels */}
           {mission.zones.map((zone, i) => (
             <ZoneLabel key={`lbl-${i}`} zone={zone} />
+          ))}
+
+          {/* Objective markers */}
+          {(mission.objectives ?? []).map((obj) => (
+            <ObjectiveMarker key={`obj-${obj.label}`} objective={obj} />
           ))}
 
           {/* Ruler ticks */}

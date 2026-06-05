@@ -11,6 +11,12 @@ export default function InfoPanel({ mission }) {
           <dd>{mission.zones.filter(z => z.role !== 'neutral').length}</dd>
         </div>
         <div className={styles.metaRow}>
+          <dt>Objectives</dt>
+          <dd style={{ color: 'var(--color-text-accent)' }}>
+            {mission.objectives?.length ?? 0}
+          </dd>
+        </div>
+        <div className={styles.metaRow}>
           <dt>Attacker</dt>
           <dd style={{ color: 'var(--color-zone-attacker-solid)' }}>Red</dd>
         </div>

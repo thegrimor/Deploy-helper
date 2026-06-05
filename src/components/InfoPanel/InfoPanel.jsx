@@ -8,7 +8,7 @@ export default function InfoPanel({ mission }) {
       <dl className={styles.meta}>
         <div className={styles.metaRow}>
           <dt>Zones</dt>
-          <dd>{mission.zones.length}</dd>
+          <dd>{mission.zones.filter(z => z.role !== 'neutral').length}</dd>
         </div>
         <div className={styles.metaRow}>
           <dt>Attacker</dt>

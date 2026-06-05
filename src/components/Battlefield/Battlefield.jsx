@@ -7,62 +7,104 @@ const VB_H = 88
 const ZONE_FILL = {
   attacker: 'var(--color-zone-attacker)',
   defender: 'var(--color-zone-defender)',
-  neutral: 'var(--color-zone-neutral)',
+  neutral:  'var(--color-zone-neutral)',
 }
 
-function toSvgX(pct) { return (pct / 100) * VB_W }
-function toSvgY(pct) { return (pct / 100) * VB_H }
+const ZONE_FILL_SOLID = {
+  attacker: 'var(--color-zone-attacker-solid)',
+  defender: 'var(--color-zone-defender-solid)',
+  neutral:  'var(--color-text-secondary)',
+}
 
-function ZoneShape({ zone, index }) {
+function toX(pct) { return (pct / 100) * VB_W }
+function toY(pct) { return (pct / 100) * VB_H }
+
+// Geometric centroid of a polygon (Shoelace formula)
+function polygonCentroid(points) {
+  let area = 0
+  let cx = 0
+  let cy = 0
+  const n = points.length
+  for (let i = 0; i < n; i++) {
+    const [x0, y0] = points[i]
+    const [x1, y1] = points[(i + 1) % n]
+    const cross = x0 * y1 - x1 * y0
+    area += cross
+    cx += (x0 + x1) * cross
+    cy += (y0 + y1) * cross
+  }
+  area /= 2
+  cx /= 6 * area
+  cy /= 6 * area
+  return { cx, cy }
+}
+
+function ZoneShape({ zone }) {
   const fill = ZONE_FILL[zone.role] ?? ZONE_FILL.neutral
+  const isNeutral = zone.role === 'neutral'
   const common = {
     fill,
-    stroke: 'var(--color-zone-stroke)',
-    strokeWidth: 0.4,
-    strokeDasharray: '2 1',
+    stroke: isNeutral ? 'var(--color-text-secondary)' : 'var(--color-zone-stroke)',
+    strokeWidth: isNeutral ? 0.3 : 0.4,
+    strokeDasharray: isNeutral ? '1 0.5' : '2 1',
+    opacity: isNeutral ? 0.6 : 1,
   }
 
   if (zone.shape === 'rect') {
     return (
       <rect
-        key={index}
-        x={toSvgX(zone.x)}
-        y={toSvgY(zone.y)}
-        width={toSvgX(zone.width)}
-        height={toSvgY(zone.height)}
+        x={toX(zone.x)} y={toY(zone.y)}
+        width={toX(zone.width)} height={toY(zone.height)}
         {...common}
       />
     )
   }
   if (zone.shape === 'polygon') {
     const pts = zone.points
-      .map(([px, py]) => `${toSvgX(px)},${toSvgY(py)}`)
+      .map(([px, py]) => `${toX(px)},${toY(py)}`)
       .join(' ')
-    return <polygon key={index} points={pts} {...common} />
+    return <polygon points={pts} {...common} />
+  }
+  if (zone.shape === 'ellipse') {
+    return (
+      <ellipse
+        cx={toX(zone.cx)} cy={toY(zone.cy)}
+        rx={toX(zone.rx)} ry={toY(zone.ry)}
+        {...common}
+      />
+    )
   }
   return null
 }
 
 function ZoneLabel({ zone }) {
   let cx, cy
-  if (zone.shape === 'rect') {
-    cx = toSvgX(zone.x + zone.width / 2)
-    cy = toSvgY(zone.y + zone.height / 2)
+
+  if (zone.labelPos) {
+    cx = toX(zone.labelPos.x)
+    cy = toY(zone.labelPos.y)
+  } else if (zone.shape === 'rect') {
+    cx = toX(zone.x + zone.width / 2)
+    cy = toY(zone.y + zone.height / 2)
   } else if (zone.shape === 'polygon') {
-    const xs = zone.points.map(p => p[0])
-    const ys = zone.points.map(p => p[1])
-    cx = toSvgX((Math.min(...xs) + Math.max(...xs)) / 2)
-    cy = toSvgY((Math.min(...ys) + Math.max(...ys)) / 2)
+    const c = polygonCentroid(zone.points)
+    cx = toX(c.cx)
+    cy = toY(c.cy)
+  } else if (zone.shape === 'ellipse') {
+    cx = toX(zone.cx)
+    cy = toY(zone.cy)
   }
+
+  const isNeutral = zone.role === 'neutral'
+
   return (
     <text
-      x={cx}
-      y={cy}
+      x={cx} y={cy}
       textAnchor="middle"
       dominantBaseline="middle"
-      fontSize={4.5}
+      fontSize={isNeutral ? 3.5 : 4.5}
       fontFamily="var(--font-label, 'Georgia', serif)"
-      fill="var(--color-text-primary)"
+      fill={isNeutral ? 'var(--color-text-secondary)' : 'var(--color-text-primary)'}
       opacity={0.9}
       letterSpacing={0.3}
       style={{ userSelect: 'none', pointerEvents: 'none' }}
@@ -74,17 +116,16 @@ function ZoneLabel({ zone }) {
 
 function GridLines() {
   const lines = []
-  // Vertical lines every 6" (= 12 SVG units on a 60" = 120 SVG unit wide board)
-  const stepX = 12
-  for (let x = stepX; x < VB_W; x += stepX) {
+  // Vertical lines every 6" (= 12 SVG units on 120-unit wide board)
+  for (let x = 12; x < VB_W; x += 12) {
     lines.push(
       <line key={`v${x}`} x1={x} y1={0} x2={x} y2={VB_H}
         stroke="var(--color-battlefield-grid)" strokeWidth={0.2} />
     )
   }
-  // Horizontal lines every ~6" (44" / 7.33 ≈ 6")
-  const stepY = VB_H / 7.33
-  for (let y = stepY; y < VB_H; y += stepY) {
+  // Horizontal lines every ~6" (44/7.33 ≈ 6")
+  const hStep = VB_H / 7.33
+  for (let y = hStep; y < VB_H; y += hStep) {
     lines.push(
       <line key={`h${y.toFixed(1)}`} x1={0} y1={y} x2={VB_W} y2={y}
         stroke="var(--color-battlefield-grid)" strokeWidth={0.2} />
@@ -97,7 +138,7 @@ function RulerMarks() {
   const marks = []
   const tickLen = 1.5
   const stepX = 12
-  const stepY = VB_H / 7.33
+  const hStep = VB_H / 7.33
 
   for (let x = stepX; x < VB_W; x += stepX) {
     marks.push(
@@ -107,7 +148,7 @@ function RulerMarks() {
         stroke="var(--color-text-secondary)" strokeWidth={0.35} opacity={0.5} />
     )
   }
-  for (let y = stepY; y < VB_H; y += stepY) {
+  for (let y = hStep; y < VB_H; y += hStep) {
     marks.push(
       <line key={`ty-l${y.toFixed(1)}`} x1={0} y1={y} x2={tickLen} y2={y}
         stroke="var(--color-text-secondary)" strokeWidth={0.35} opacity={0.5} />,
@@ -116,6 +157,19 @@ function RulerMarks() {
     )
   }
   return <>{marks}</>
+}
+
+function Crosshair() {
+  return (
+    <>
+      <line x1={VB_W / 2} y1={0} x2={VB_W / 2} y2={VB_H}
+        stroke="var(--color-text-secondary)" strokeWidth={0.25}
+        strokeDasharray="1 1" opacity={0.25} />
+      <line x1={0} y1={VB_H / 2} x2={VB_W} y2={VB_H / 2}
+        stroke="var(--color-text-secondary)" strokeWidth={0.25}
+        strokeDasharray="1 1" opacity={0.25} />
+    </>
+  )
 }
 
 export default function Battlefield({ mission }) {
@@ -136,18 +190,16 @@ export default function Battlefield({ mission }) {
           {/* Grid */}
           <GridLines />
 
-          {/* Deployment zones */}
-          {mission.zones.map((zone, i) => (
-            <ZoneShape key={i} zone={zone} index={i} />
-          ))}
+          {/* Deployment zones — attacker and defender first, neutral overlays last */}
+          {mission.zones
+            .filter(z => z.role !== 'neutral')
+            .map((zone, i) => <ZoneShape key={i} zone={zone} />)}
+          {mission.zones
+            .filter(z => z.role === 'neutral')
+            .map((zone, i) => <ZoneShape key={`n${i}`} zone={zone} />)}
 
           {/* Centre crosshair */}
-          <line x1={VB_W / 2} y1={0} x2={VB_W / 2} y2={VB_H}
-            stroke="var(--color-text-secondary)" strokeWidth={0.25}
-            strokeDasharray="1 1" opacity={0.3} />
-          <line x1={0} y1={VB_H / 2} x2={VB_W} y2={VB_H / 2}
-            stroke="var(--color-text-secondary)" strokeWidth={0.25}
-            strokeDasharray="1 1" opacity={0.3} />
+          <Crosshair />
 
           {/* Zone labels */}
           {mission.zones.map((zone, i) => (

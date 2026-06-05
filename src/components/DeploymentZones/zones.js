@@ -21,6 +21,13 @@ export const MISSIONS = [
       'Each player deploys in a 12" strip along one of the long table edges, ' +
       'leaving a 20" no-man\'s-land across the centre. ' +
       'The most common and balanced deployment.',
+    objectives: [
+      { label: 'A', x: 50,   y: 13.6  },
+      { label: 'B', x: 25,   y: 50    },
+      { label: 'C', x: 50,   y: 50    },
+      { label: 'D', x: 75,   y: 50    },
+      { label: 'E', x: 50,   y: 86.4  },
+    ],
     zones: [
       {
         role: 'attacker',
@@ -43,6 +50,13 @@ export const MISSIONS = [
     description:
       'Deployment zones run along the short table edges. Each player occupies an 18" strip, ' +
       'leaving a 24" central no-man\'s-land. A longer fight with more room to manoeuvre.',
+    objectives: [
+      { label: 'A', x: 15,   y: 50    },
+      { label: 'B', x: 50,   y: 25    },
+      { label: 'C', x: 50,   y: 50    },
+      { label: 'D', x: 50,   y: 75    },
+      { label: 'E', x: 85,   y: 50    },
+    ],
     zones: [
       {
         role: 'attacker',
@@ -65,6 +79,13 @@ export const MISSIONS = [
     description:
       'Each player deploys in one of two diagonally opposite quadrants (quarter-table rectangles), ' +
       'with a 9" no-deploy exclusion circle around the centre of the battlefield.',
+    objectives: [
+      { label: 'A', x: 75,   y: 15    },
+      { label: 'B', x: 75,   y: 50    },
+      { label: 'C', x: 63,   y: 37    },
+      { label: 'D', x: 25,   y: 50    },
+      { label: 'E', x: 25,   y: 85    },
+    ],
     zones: [
       {
         // Attacker: top-right quadrant
@@ -101,6 +122,13 @@ export const MISSIONS = [
       'Stepped L-shaped zones from opposite long-edge corners. ' +
       'Each zone extends 8" from the long edge on the far half, and 14" on the near half. ' +
       'The innermost corners are only 16" apart, encouraging early contact.',
+    objectives: [
+      { label: 'A', x: 25,   y: 15    },
+      { label: 'B', x: 75,   y: 25    },
+      { label: 'C', x: 50,   y: 50    },
+      { label: 'D', x: 25,   y: 75    },
+      { label: 'E', x: 75,   y: 85    },
+    ],
     zones: [
       {
         // Attacker: top-long-edge, deeper on the left half
@@ -132,6 +160,13 @@ export const MISSIONS = [
       'Hammer & Anvil variant with two different zone depths. ' +
       'Each player\'s zone is 12" deep on one table half and 20" deep on the other, ' +
       'with the deep halves on opposite sides. Minimum gap: 20".',
+    objectives: [
+      { label: 'A', x: 16,   y: 50    },
+      { label: 'B', x: 50,   y: 25    },
+      { label: 'C', x: 50,   y: 50    },
+      { label: 'D', x: 50,   y: 75    },
+      { label: 'E', x: 84,   y: 50    },
+    ],
     zones: [
       {
         // Attacker: left short edge
@@ -171,6 +206,13 @@ export const MISSIONS = [
     description:
       'Triangular deployment: diagonally opposite corners. Each zone covers the full short edge ' +
       'and tapers to the centre of the adjacent long edge. The largest gap of all deployments.',
+    objectives: [
+      { label: 'A', x: 20,   y: 60    },
+      { label: 'B', x: 50,   y: 75    },
+      { label: 'C', x: 50,   y: 50    },
+      { label: 'D', x: 50,   y: 25    },
+      { label: 'E', x: 80,   y: 40    },
+    ],
     zones: [
       {
         // Attacker: bottom-left triangle

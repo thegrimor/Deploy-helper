@@ -1,25 +1,26 @@
 import styles from './DeploymentZoneSelector.module.css'
 
 export default function DeploymentZoneSelector({ missions, selectedMission, onSelect }) {
+  function handleChange(e) {
+    const mission = missions.find(m => m.id === e.target.value)
+    if (mission) onSelect(mission)
+  }
+
   return (
     <nav className={styles.selector} aria-label="Mission type">
-      <h2 className={styles.heading}>Mission Type</h2>
-      <ul className={styles.list} role="list">
+      <label className={styles.heading} htmlFor="mission-select">Mission Type</label>
+      <select
+        id="mission-select"
+        className={styles.select}
+        value={selectedMission.id}
+        onChange={handleChange}
+      >
         {missions.map((mission) => (
-          <li key={mission.id}>
-            <button
-              className={`${styles.missionBtn} ${
-                selectedMission.id === mission.id ? styles.active : ''
-              }`}
-              onClick={() => onSelect(mission)}
-              aria-pressed={selectedMission.id === mission.id}
-            >
-              <span className={styles.shortName}>{mission.shortName}</span>
-              <span className={styles.fullName}>{mission.name}</span>
-            </button>
-          </li>
+          <option key={mission.id} value={mission.id}>
+            {mission.shortName} — {mission.name}
+          </option>
         ))}
-      </ul>
+      </select>
     </nav>
   )
 }

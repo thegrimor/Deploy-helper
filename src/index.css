@@ -15,11 +15,6 @@
   --color-zone-neutral: rgba(30, 30, 30, 0.55);
   --color-zone-stroke: rgba(255, 220, 100, 0.9);
 
-  /* Objective marker colors */
-  --color-objective-fill:  rgba(180, 140, 0, 0.85);
-  --color-objective-ring:  #d4aa00;
-  --color-objective-label: #0d0d0f;
-
   /* Solid zone colors for legend */
   --color-zone-attacker-solid: #b42820;
   --color-zone-defender-solid: #1e50b4;

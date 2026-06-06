@@ -198,14 +198,6 @@ export const MISSIONS = [
       { label: 'CO', x: 44, y: 82, width: 14, height: 10, rotate:   0 },
       { label: '',   x: 82, y: 84, width: 14, height:  9, rotate:  50 },
     ],
-    objectives: [
-      // image(50%, 22%) → code(x:22, y:50) — near attacker zone boundary
-      { label: '1', x: 22, y: 50 },
-      // centre
-      { label: '2', x: 50, y: 50 },
-      // image(50%, 78%) → code(x:78, y:50) — near defender zone boundary
-      { label: '3', x: 78, y: 50 },
-    ],
     zones: [
       {
         role: 'attacker',

@@ -171,51 +171,6 @@ export const MISSIONS = [
     ],
   },
   {
-    id: 'take-and-hold',
-    name: 'Take and Hold',
-    shortName: 'T&H',
-    image: '/scenarios/take-and-hold.jpg',
-    description:
-      'Each player deploys in a 12" strip along one of the long table edges, ' +
-      'leaving a 20" no-man\'s-land across the centre. ' +
-      'Three objectives are placed along the centre line of the battlefield.',
-    terrain: [
-      // Attacker zone (top strip, y: 0–27%) — image LEFT mapped to code TOP
-      { label: '',   x:  6, y:  7, width: 14, height:  9, rotate:  50 },
-      { label: 'CO', x: 44, y:  8, width: 14, height: 10, rotate:   0 },
-      { label: '',   x: 82, y:  7, width: 14, height:  9, rotate: -50 },
-      // Centre column — upper cluster (EF + GH, near objective 1)
-      { label: 'EF', x: 17, y: 32, width: 14, height: 12, rotate: -20 },
-      { label: 'GH', x: 23, y: 38, width: 12, height: 11, rotate:  10 },
-      // Centre column — AB pair (flanking centre objective)
-      { label: 'AB', x: 36, y: 36, width: 13, height: 11, rotate: -20 },
-      { label: 'AB', x: 42, y: 48, width: 13, height: 11, rotate: -20 },
-      // Centre column — lower cluster (GH + EF, near objective 3)
-      { label: 'GH', x: 50, y: 50, width: 12, height: 11, rotate:  10 },
-      { label: 'EF', x: 56, y: 56, width: 14, height: 12, rotate: -20 },
-      // Defender zone (bottom strip, y: 73–100%) — image RIGHT mapped to code BOTTOM
-      { label: '',   x:  6, y: 84, width: 14, height:  9, rotate: -50 },
-      { label: 'CO', x: 44, y: 82, width: 14, height: 10, rotate:   0 },
-      { label: '',   x: 82, y: 84, width: 14, height:  9, rotate:  50 },
-    ],
-    zones: [
-      {
-        role: 'attacker',
-        label: 'Attacker',
-        shape: 'rect',
-        // 12" from top long edge → y: 12/44*100 = 27.27%
-        x: 0, y: 0, width: 100, height: 27.27,
-      },
-      {
-        role: 'defender',
-        label: 'Defender',
-        shape: 'rect',
-        // 12" from bottom long edge → y: 72.73% to 100%
-        x: 0, y: 72.73, width: 100, height: 27.27,
-      },
-    ],
-  },
-  {
     id: 'crucible-of-battle',
     name: 'Crucible of Battle',
     shortName: 'CoB',

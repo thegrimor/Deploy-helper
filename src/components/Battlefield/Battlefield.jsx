@@ -274,7 +274,7 @@ function ObjectiveMarker({ obj }) {
   )
 }
 
-export default function Battlefield({ mission }) {
+export default function Battlefield({ mission, terrainLayout }) {
   return (
     <div className={styles.wrapper}>
       <p className={styles.missionLabel} aria-hidden="true">{mission.name}</p>
@@ -300,18 +300,13 @@ export default function Battlefield({ mission }) {
             .filter(z => z.role === 'neutral')
             .map((zone, i) => <ZoneShape key={`n${i}`} zone={zone} />)}
 
-          {/* Terrain pieces */}
-          {(mission.terrain ?? []).map((piece, i) => (
+          {/* Terrain pieces from selected layout */}
+          {(terrainLayout?.terrain ?? []).map((piece, i) => (
             <TerrainPiece key={`t-${i}`} piece={piece} />
           ))}
 
           {/* Centre crosshair */}
           <Crosshair />
-
-          {/* Objective markers */}
-          {(mission.objectives ?? []).map((obj, i) => (
-            <ObjectiveMarker key={`o-${i}`} obj={obj} />
-          ))}
 
           {/* Zone labels */}
           {mission.zones.map((zone, i) => (

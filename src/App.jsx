@@ -1,6 +1,7 @@
 import Header from './components/Header/Header.jsx'
 import Battlefield from './components/Battlefield/Battlefield.jsx'
 import DeploymentZoneSelector from './components/DeploymentZones/DeploymentZoneSelector.jsx'
+import TerrainLayoutSelector from './components/DeploymentZones/TerrainLayoutSelector.jsx'
 import PrimariaSelector from './components/DeploymentZones/PrimariaSelector.jsx'
 import InfoPanel from './components/InfoPanel/InfoPanel.jsx'
 import { useBattlefield } from './hooks/useBattlefield.js'
@@ -10,6 +11,7 @@ export default function App() {
   const {
     missions, selectedMission, selectMission,
     primarias, selectedPrimaria, selectPrimaria,
+    terrainLayouts, selectedTerrainLayout, selectTerrainLayout,
   } = useBattlefield()
 
   return (
@@ -22,15 +24,20 @@ export default function App() {
             selectedMission={selectedMission}
             onSelect={selectMission}
           />
+          <TerrainLayoutSelector
+            layouts={terrainLayouts}
+            selectedLayout={selectedTerrainLayout}
+            onSelect={selectTerrainLayout}
+          />
           <PrimariaSelector
             primarias={primarias}
             selectedPrimaria={selectedPrimaria}
             onSelect={selectPrimaria}
           />
-          <InfoPanel mission={selectedMission} primaria={selectedPrimaria} />
+          <InfoPanel mission={selectedMission} primaria={selectedPrimaria} terrainLayout={selectedTerrainLayout} />
         </aside>
         <section className={styles.battlefieldSection}>
-          <Battlefield mission={selectedMission} />
+          <Battlefield mission={selectedMission} terrainLayout={selectedTerrainLayout} />
         </section>
       </main>
     </div>

@@ -1,26 +1,31 @@
 import styles from './InfoPanel.module.css'
 
-export default function InfoPanel({ mission, primaria }) {
+export default function InfoPanel({ mission, primaria, terrainLayout }) {
   return (
     <aside className={styles.panel} aria-live="polite" aria-atomic="true">
       <h3 className={styles.missionName}>{mission.name}</h3>
       <p className={styles.description}>{mission.description}</p>
+
+      {terrainLayout && (
+        <>
+          <h4 className={styles.primariaName}>{terrainLayout.name}</h4>
+          {terrainLayout.image && (
+            <div className={styles.scenarioImageWrapper}>
+              <img
+                src={terrainLayout.image}
+                alt={`${terrainLayout.name} terrain layout`}
+                className={styles.scenarioImage}
+              />
+            </div>
+          )}
+        </>
+      )}
 
       {primaria && (
         <>
           <h4 className={styles.primariaName}>{primaria.name}</h4>
           <p className={styles.description}>{primaria.description}</p>
         </>
-      )}
-
-      {mission.image && (
-        <div className={styles.scenarioImageWrapper}>
-          <img
-            src={mission.image}
-            alt={`${mission.name} scenario map`}
-            className={styles.scenarioImage}
-          />
-        </div>
       )}
 
       <dl className={styles.meta}>

@@ -176,46 +176,50 @@ export const MISSIONS = [
     shortName: 'T&H',
     image: '/scenarios/take-and-hold.jpg',
     description:
-      'Deployment zones run along the short table edges. Each player occupies a 12" strip, ' +
-      'leaving a 36" central no-man\'s-land. Forces must advance across open ground to reach objectives.',
+      'Each player deploys in a 12" strip along one of the long table edges, ' +
+      'leaving a 20" no-man\'s-land across the centre. ' +
+      'Three objectives are placed along the centre line of the battlefield.',
     terrain: [
-      // Central band — top cluster
-      { label: 'EF', x: 21, y: 30,  width: 13, height: 5.5, rotate: -20 },
-      { label: 'GH', x: 26, y: 40,  width: 11, height: 5,   rotate:  10 },
-      // Central band — middle pair
-      { label: 'AB', x: 26, y: 29,  width: 11, height: 5,   rotate: -25 },
-      { label: 'AB', x: 38, y: 41,  width: 11, height: 5,   rotate: -20 },
-      // Central band — bottom cluster (mirror of top)
-      { label: 'GH', x: 60, y: 36,  width: 11, height: 5,   rotate:  10 },
-      { label: 'EF', x: 67, y: 41,  width: 13, height: 5.5, rotate: -20 },
-      // Attacker zone (left)
-      { label: '',   x: 12, y: 14,  width: 12, height: 4.5, rotate: -40 },
-      { label: 'CO', x: 45, y: 11,  width: 11, height: 5,   rotate:   0 },
-      { label: '',   x: 62, y: 13,  width: 12, height: 4.5, rotate: -40 },
-      // Defender zone (right, mirrored)
-      { label: '',   x: 12, y: 81,  width: 12, height: 4.5, rotate:  40 },
-      { label: 'CO', x: 45, y: 84,  width: 11, height: 5,   rotate:   0 },
-      { label: '',   x: 62, y: 83,  width: 12, height: 4.5, rotate:  40 },
+      // Attacker zone (top strip, y: 0–27%) — image LEFT mapped to code TOP
+      { label: '',   x:  6, y:  7, width: 14, height:  9, rotate:  50 },
+      { label: 'CO', x: 44, y:  8, width: 14, height: 10, rotate:   0 },
+      { label: '',   x: 82, y:  7, width: 14, height:  9, rotate: -50 },
+      // Centre column — upper cluster (EF + GH, near objective 1)
+      { label: 'EF', x: 17, y: 32, width: 14, height: 12, rotate: -20 },
+      { label: 'GH', x: 23, y: 38, width: 12, height: 11, rotate:  10 },
+      // Centre column — AB pair (flanking centre objective)
+      { label: 'AB', x: 36, y: 36, width: 13, height: 11, rotate: -20 },
+      { label: 'AB', x: 42, y: 48, width: 13, height: 11, rotate: -20 },
+      // Centre column — lower cluster (GH + EF, near objective 3)
+      { label: 'GH', x: 50, y: 50, width: 12, height: 11, rotate:  10 },
+      { label: 'EF', x: 56, y: 56, width: 14, height: 12, rotate: -20 },
+      // Defender zone (bottom strip, y: 73–100%) — image RIGHT mapped to code BOTTOM
+      { label: '',   x:  6, y: 84, width: 14, height:  9, rotate: -50 },
+      { label: 'CO', x: 44, y: 82, width: 14, height: 10, rotate:   0 },
+      { label: '',   x: 82, y: 84, width: 14, height:  9, rotate:  50 },
     ],
     objectives: [
-      { label: '1', x: 25, y: 50 },
+      // image(50%, 22%) → code(x:22, y:50) — near attacker zone boundary
+      { label: '1', x: 22, y: 50 },
+      // centre
       { label: '2', x: 50, y: 50 },
-      { label: '3', x: 75, y: 50 },
+      // image(50%, 78%) → code(x:78, y:50) — near defender zone boundary
+      { label: '3', x: 78, y: 50 },
     ],
     zones: [
       {
         role: 'attacker',
         label: 'Attacker',
         shape: 'rect',
-        // 12" from left short edge → x: 12/60*100 = 20%
-        x: 0, y: 0, width: 20, height: 100,
+        // 12" from top long edge → y: 12/44*100 = 27.27%
+        x: 0, y: 0, width: 100, height: 27.27,
       },
       {
         role: 'defender',
         label: 'Defender',
         shape: 'rect',
-        // 12" from right short edge → x: 80% to 100%
-        x: 80, y: 0, width: 20, height: 100,
+        // 12" from bottom long edge → y: 72.73% to 100%
+        x: 0, y: 72.73, width: 100, height: 27.27,
       },
     ],
   },

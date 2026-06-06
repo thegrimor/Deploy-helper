@@ -2,9 +2,12 @@
 //   x/width  → % of 60" table (left-right axis)
 //   y/height → % of 44" table (top-bottom axis)
 //
-// Source images are portrait (44"W × 60"H). Conversion from image to code:
-//   code_x = portrait_y_inches / 60 * 100
-//   code_y = portrait_x_inches / 44 * 100
+// Source images are portrait (44"W × 60"H). Each crop is transposed (portrait→landscape).
+// Coordinate conversion from portrait inch measurements to code %:
+//   code_x     = portrait_y_start / 60 * 100
+//   code_y     = portrait_x_start / 44 * 100
+//   code_width = portrait_y_span  / 60 * 100   (portrait vertical → landscape horizontal)
+//   code_height= portrait_x_span  / 44 * 100   (portrait horizontal → landscape vertical)
 
 export const TERRAIN_LAYOUTS = [
   {
@@ -14,39 +17,39 @@ export const TERRAIN_LAYOUTS = [
     shortName: 'T&H',
     image: '/scenarios/take-and-hold.jpg',
     terrain: [
-      // ── Attacker zone (code_y: 0–27.27%) ──
-      // Diagonal top  — portrait(y≈7", x≈6")  → code(x≈11.67, y≈13.64)
-      { label: '',   x:  9, y:  7, width: 12, height: 10, rotate:  45 },
-      // CO centre     — portrait(y≈30", x≈6")  → code(x≈50,    y≈13.64)
-      { label: 'CO', x: 42, y:  6, width: 15, height: 14, rotate:   0 },
-      // Diagonal bot  — portrait(y≈50", x≈6")  → code(x≈83.33, y≈13.64)
-      { label: '',   x: 81, y:  7, width: 12, height: 10, rotate: -45 },
+      // ── Attacker zone (code_y: 0–27.27%, portrait_x: 0–12") ──
+      // crop: portrait(x=0–12", y=2–17")  → code(x=3.33, y=0, w=25, h=27.27)
+      { image: '/terrain/att_top.png', x:  3.33, y:  0,    width: 25,    height: 27.27 },
+      // crop: portrait(x=0–12", y=18–42") → code(x=30, y=0, w=40, h=27.27)
+      { image: '/terrain/att_co.png',  x: 30,    y:  0,    width: 40,    height: 27.27 },
+      // crop: portrait(x=0–12", y=43–58") → code(x=71.67, y=0, w=25, h=27.27)
+      { image: '/terrain/att_bot.png', x: 71.67, y:  0,    width: 25,    height: 27.27 },
 
-      // ── Neutral zone – upper cluster EF+GH (portrait_y: 7–17") ──
-      // EF — portrait(y≈7",  x≈17") → code(x≈11.67, y≈38.64)
-      { label: 'EF', x:  9, y: 33, width: 14, height: 12, rotate: -15 },
-      // GH — portrait(y≈14", x≈20") → code(x≈23.33, y≈45.45)
-      { label: 'GH', x: 21, y: 40, width: 12, height: 11, rotate:  10 },
+      // ── Neutral zone – upper cluster EF+GH (portrait_y: 4–22") ──
+      // EF: portrait(x=13–27", y=4–17")   → code(x=6.67, y=29.55, w=21.67, h=31.82)
+      { image: '/terrain/ef_top.png',  x:  6.67, y: 29.55, width: 21.67, height: 31.82 },
+      // GH: portrait(x=15–28", y=13–22")  → code(x=21.67, y=34.09, w=15, h=29.55)
+      { image: '/terrain/gh_top.png',  x: 21.67, y: 34.09, width: 15,    height: 29.55 },
 
-      // ── Neutral zone – AB pair (portrait_y: 17" and 43") ──
-      // AB upper — portrait(y≈17", x≈19") → code(x≈28.33, y≈43.18)
-      { label: 'AB', x: 26, y: 38, width: 14, height: 12, rotate: -20 },
-      // AB lower — portrait(y≈43", x≈23") → code(x≈71.67, y≈52.27)
-      { label: 'AB', x: 69, y: 47, width: 14, height: 12, rotate: -20 },
+      // ── Neutral zone – AB pair ──
+      // AB upper: portrait(x=14–28", y=16–25") → code(x=26.67, y=31.82, w=15, h=31.82)
+      { image: '/terrain/ab_top.png',  x: 26.67, y: 31.82, width: 15,    height: 31.82 },
+      // AB lower: portrait(x=14–28", y=35–44") → code(x=58.33, y=31.82, w=15, h=31.82)
+      { image: '/terrain/ab_bot.png',  x: 58.33, y: 31.82, width: 15,    height: 31.82 },
 
-      // ── Neutral zone – lower cluster GH+EF (portrait_y: 43–53") ──
-      // GH — portrait(y≈43", x≈22") → code(x≈71.67, y≈50)
-      { label: 'GH', x: 69, y: 44, width: 12, height: 11, rotate:  10 },
-      // EF — portrait(y≈50", x≈17") → code(x≈83.33, y≈38.64)
-      { label: 'EF', x: 81, y: 33, width: 14, height: 12, rotate: -15 },
+      // ── Neutral zone – lower cluster GH+EF (portrait_y: 38–56") ──
+      // GH: portrait(x=15–28", y=38–47")  → code(x=63.33, y=34.09, w=15, h=29.55)
+      { image: '/terrain/gh_bot.png',  x: 63.33, y: 34.09, width: 15,    height: 29.55 },
+      // EF: portrait(x=13–27", y=43–56")  → code(x=71.67, y=29.55, w=21.67, h=31.82)
+      { image: '/terrain/ef_bot.png',  x: 71.67, y: 29.55, width: 21.67, height: 31.82 },
 
-      // ── Defender zone (code_y: 72.73–100%) ──
-      // Diagonal top  — portrait(y≈7",  x≈38") → code(x≈11.67, y≈86.36)
-      { label: '',   x:  9, y: 83, width: 12, height: 10, rotate: -45 },
-      // CO centre     — portrait(y≈30", x≈38") → code(x≈50,    y≈86.36)
-      { label: 'CO', x: 42, y: 82, width: 15, height: 14, rotate:   0 },
-      // Diagonal bot  — portrait(y≈50", x≈38") → code(x≈83.33, y≈86.36)
-      { label: '',   x: 81, y: 83, width: 12, height: 10, rotate:  45 },
+      // ── Defender zone (code_y: 72.73–100%, portrait_x: 32–44") ──
+      // crop: portrait(x=32–44", y=3–24")  → code(x=5, y=72.73, w=35, h=27.27)
+      { image: '/terrain/def_top.png', x:  5,    y: 72.73, width: 35,    height: 27.27 },
+      // crop: portrait(x=32–44", y=25–43") → code(x=41.67, y=72.73, w=30, h=27.27)
+      { image: '/terrain/def_co.png',  x: 41.67, y: 72.73, width: 30,    height: 27.27 },
+      // crop: portrait(x=32–44", y=43–58") → code(x=71.67, y=72.73, w=25, h=27.27)
+      { image: '/terrain/def_bot.png', x: 71.67, y: 72.73, width: 25,    height: 27.27 },
     ],
   },
 ]

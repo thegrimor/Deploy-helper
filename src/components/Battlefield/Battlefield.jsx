@@ -216,6 +216,18 @@ function Crosshair() {
 }
 
 function TerrainPiece({ piece }) {
+  if (piece.image) {
+    return (
+      <image
+        href={piece.image}
+        x={toX(piece.x)} y={toY(piece.y)}
+        width={toX(piece.width)} height={toY(piece.height)}
+        preserveAspectRatio="none"
+        opacity={0.9}
+      />
+    )
+  }
+
   const cx = toX(piece.x + piece.width / 2)
   const cy = toY(piece.y + piece.height / 2)
   return (

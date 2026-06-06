@@ -215,6 +215,65 @@ function Crosshair() {
   )
 }
 
+function TerrainPiece({ piece }) {
+  const cx = toX(piece.x + piece.width / 2)
+  const cy = toY(piece.y + piece.height / 2)
+  return (
+    <g transform={`rotate(${piece.rotate ?? 0}, ${cx}, ${cy})`}>
+      <rect
+        x={toX(piece.x)} y={toY(piece.y)}
+        width={toX(piece.width)} height={toY(piece.height)}
+        fill="#5a5850" stroke="#8a8878" strokeWidth={0.35}
+        opacity={0.85} rx={0.3}
+      />
+      {piece.label && (
+        <text
+          x={cx} y={cy}
+          textAnchor="middle" dominantBaseline="middle"
+          fontSize={2.2} fontFamily="var(--font-label, 'Georgia', serif)"
+          fill="var(--color-text-secondary)" opacity={0.9}
+          style={{ userSelect: 'none', pointerEvents: 'none' }}
+        >
+          {piece.label}
+        </text>
+      )}
+    </g>
+  )
+}
+
+function ObjectiveMarker({ obj }) {
+  const cx = toX(obj.x)
+  const cy = toY(obj.y)
+  const r = 2.8
+  const pts = `${cx},${cy - r} ${cx + r},${cy} ${cx},${cy + r} ${cx - r},${cy}`
+  return (
+    <g>
+      <polygon
+        points={pts}
+        fill="#1a2a1a"
+        stroke="var(--color-text-accent)" strokeWidth={0.45} opacity={0.92}
+      />
+      <text
+        x={cx} y={cy}
+        textAnchor="middle" dominantBaseline="middle"
+        fontSize={2.6} fill="var(--color-text-accent)" opacity={0.9}
+        style={{ userSelect: 'none', pointerEvents: 'none' }}
+      >☠</text>
+      {obj.label && (
+        <text
+          x={cx} y={cy + r + 1.4}
+          textAnchor="middle" dominantBaseline="middle"
+          fontSize={1.8} fontFamily="var(--font-label, 'Georgia', serif)"
+          fill="var(--color-text-accent)" opacity={0.75}
+          style={{ userSelect: 'none', pointerEvents: 'none' }}
+        >
+          {obj.label}
+        </text>
+      )}
+    </g>
+  )
+}
+
 export default function Battlefield({ mission }) {
   return (
     <div className={styles.wrapper}>
@@ -241,8 +300,18 @@ export default function Battlefield({ mission }) {
             .filter(z => z.role === 'neutral')
             .map((zone, i) => <ZoneShape key={`n${i}`} zone={zone} />)}
 
+          {/* Terrain pieces */}
+          {(mission.terrain ?? []).map((piece, i) => (
+            <TerrainPiece key={`t-${i}`} piece={piece} />
+          ))}
+
           {/* Centre crosshair */}
           <Crosshair />
+
+          {/* Objective markers */}
+          {(mission.objectives ?? []).map((obj, i) => (
+            <ObjectiveMarker key={`o-${i}`} obj={obj} />
+          ))}
 
           {/* Zone labels */}
           {mission.zones.map((zone, i) => (

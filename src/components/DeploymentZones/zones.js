@@ -178,6 +178,30 @@ export const MISSIONS = [
     description:
       'Deployment zones run along the short table edges. Each player occupies a 12" strip, ' +
       'leaving a 36" central no-man\'s-land. Forces must advance across open ground to reach objectives.',
+    terrain: [
+      // Central band — top cluster
+      { label: 'EF', x: 21, y: 30,  width: 13, height: 5.5, rotate: -20 },
+      { label: 'GH', x: 26, y: 40,  width: 11, height: 5,   rotate:  10 },
+      // Central band — middle pair
+      { label: 'AB', x: 26, y: 29,  width: 11, height: 5,   rotate: -25 },
+      { label: 'AB', x: 38, y: 41,  width: 11, height: 5,   rotate: -20 },
+      // Central band — bottom cluster (mirror of top)
+      { label: 'GH', x: 60, y: 36,  width: 11, height: 5,   rotate:  10 },
+      { label: 'EF', x: 67, y: 41,  width: 13, height: 5.5, rotate: -20 },
+      // Attacker zone (left)
+      { label: '',   x: 12, y: 14,  width: 12, height: 4.5, rotate: -40 },
+      { label: 'CO', x: 45, y: 11,  width: 11, height: 5,   rotate:   0 },
+      { label: '',   x: 62, y: 13,  width: 12, height: 4.5, rotate: -40 },
+      // Defender zone (right, mirrored)
+      { label: '',   x: 12, y: 81,  width: 12, height: 4.5, rotate:  40 },
+      { label: 'CO', x: 45, y: 84,  width: 11, height: 5,   rotate:   0 },
+      { label: '',   x: 62, y: 83,  width: 12, height: 4.5, rotate:  40 },
+    ],
+    objectives: [
+      { label: '1', x: 25, y: 50 },
+      { label: '2', x: 50, y: 50 },
+      { label: '3', x: 75, y: 50 },
+    ],
     zones: [
       {
         role: 'attacker',
